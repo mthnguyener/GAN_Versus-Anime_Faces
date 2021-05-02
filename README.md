@@ -95,3 +95,11 @@ Fig. 9. Newly generated images from our StyleGAN model
 <div style="text-align:center"><img src="https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/StyleGAN/generated_images.png" /></div>
 
 ## Thank you!
+
+## References
+1.	Goodfellow, et al., Generative Adversarial Networks, https://arxiv.org/abs/1406.2661
+2.	Churchill, Anime Face Dataset, Kaggle, https://www.kaggle.com/splcher/animefacedataset
+3.	Radford, Metz and Chintala, Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks, https://arxiv.org/abs/1511.06434
+4.	DCGAN Tutorial, https://pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html
+5.	NVLabs, StyleGAN — Official TensorFlow Implementation, GitHub, https://github.com/NVlabs/stylegan
+6.	NVIDIA – Karras, Laine and Aila, A Style-Based Generator Architecture for Generative Adversarial Networks (2019), https://arxiv.org/abs/1812.04948
