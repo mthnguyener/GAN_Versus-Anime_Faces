@@ -13,9 +13,7 @@ Full Dataset               |  19,000 images
 
 By training with the shrinked dataset, the models did a fair job capturing the major attributes. In contrast, using the full dataset, the model not only learns those attributes, but also represents them more accurately and generates less artifacts (see Table.1).
 
-<p align="center">
-  ![DCGAN Table](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/DCGAN_Table.png)
-</p>
+<div style="text-align:center"><img src="![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/DCGAN_Table.png)" /></div>
 
 ### 1.2. Feature Exploration
 As the author of DCGAN pointed out, the manipulation of the Z representation, ie. the input noise, yields smooth transformation of certain characteristics in the image.3 We explored this based on the model trained on the full dataset with 50 epochs. Here, we used a fixed input Z, which consists of 100 variables drawn from a standard Gaussian distribution, and manipulated the selected variables one at a time while holding the others constant, in order to observe the impact of such variables on the generated image.
