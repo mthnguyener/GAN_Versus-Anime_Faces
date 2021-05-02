@@ -33,7 +33,7 @@ Fig.3. Another example Z representation manipulation
 The difference in the effect of the variable at the same index position in the Z representation suggests that DCGAN is incapable of allowing specific-control of certain image attributes. However, DCGAN does reveal a potential of learning meaningful attributes and generating images with smoothly transiting features. Our results show the limitations of DCGAN in that the model cannot explicitly separate the features, adjusting a specific variable in Z representation sometimes lead to changes in multiple attributes and result in a global effect on the synthesized image.
 
 ### 1.3. Quality Evaluation
-	Given the limitations of computational power, we attempted to calculate FID in the training process with a smaller dataset consisting of 9000 images, and used InceptionV3 as the feature extractor. In this toy dataset, we trained on 5 epochs to get an idea of the training quality. We noticed that the FID score is always high and fluctuating. This is explainable because InceptionV3 was trained on a different dataset and might not capture the images features for the anime faces. We did not have enough time to implement a better suited CNN model for feature extraction, so we decided to comment on the results with visual inspection.
+Given the limitations of computational power, we attempted to calculate FID in the training process with a smaller dataset consisting of 9000 images, and used InceptionV3 as the feature extractor. In this toy dataset, we trained on 5 epochs to get an idea of the training quality. We noticed that the FID score is always high and fluctuating. This is explainable because InceptionV3 was trained on a different dataset and might not capture the images features for the anime faces. We did not have enough time to implement a better suited CNN model for feature extraction, so we decided to comment on the results with visual inspection.
  
 Fig.4. Plot of FID 
 
@@ -49,7 +49,7 @@ Fig.5. Loss of the Generator and Discriminator
 ## StyleGAN
 
 ### 2.1 Image Synthesis
-	Our StyleGAN implementation involves selecting the first 19,000 images from our full dataset of 63,632 anime faces. We cloned NVIDIA StyleGAN GitHub and used some of the scripts as starter codes while editing only the critical lines.5 Our images were also resized, converted to Tensorflow records (tfrecords is required since StyleGAN uses TensorFlow) and pre-processed before training our model for 3,500 iterations. After 9 hours of training, we were able to produce a model with a FID of 39.4008 which is quite decent considering our limited hardware and time. Below are 8x8 grids of our images at genesis and completion:
+Our StyleGAN implementation involves selecting the first 19,000 images from our full dataset of 63,632 anime faces. We cloned NVIDIA StyleGAN GitHub and used some of the scripts as starter codes while editing only the critical lines.5 Our images were also resized, converted to Tensorflow records (tfrecords is required since StyleGAN uses TensorFlow) and pre-processed before training our model for 3,500 iterations. After 9 hours of training, we were able to produce a model with a FID of 39.4008 which is quite decent considering our limited hardware and time. Below are 8x8 grids of our images at genesis and completion:
 
   
 	Fig. 6. Left: Our trained images at genesis. Right: Our trained images at completion (after 3,500 iterations)
@@ -58,18 +58,18 @@ At Genesis                 |  Completion
 :-------------------------:|:-------------------------:
 ![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/StyleGAN/fakes000000_first.png) | !![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/StyleGAN/fakes003500_last.png)
 
-	As you can see the model images look quite pleasant, considering our model was trained on Google Colab Pro (1 GPU) for less than one day using only 19,000 images. The original NVIDIA’s StyleGAN paper used two main datasets for two different models: Flickr-Faces-HQ (FFHQ) and CelebA HQ, 70,000 1024x1024 and 200,000 with mixed resolution images, respectively.6 Additionally, our model used a resolution of 64x64 which was much lower than that of NVIDIA’s (1024x1024).
+As you can see the model images look quite pleasant, considering our model was trained on Google Colab Pro (1 GPU) for less than one day using only 19,000 images. The original NVIDIA’s StyleGAN paper used two main datasets for two different models: Flickr-Faces-HQ (FFHQ) and CelebA HQ, 70,000 1024x1024 and 200,000 with mixed resolution images, respectively.6 Additionally, our model used a resolution of 64x64 which was much lower than that of NVIDIA’s (1024x1024).
 
 ### 2.2 Feature Exploration
-	The beauty of StyleGAN is its controllability. The traditional GAN (Goodfellow et al.,2014), operated like a blackbox where random noises go in and an image gets generated. In this project, we explored two controlling methods of StyleGAN: Style Mixing and Truncation..
+The beauty of StyleGAN is its controllability. The traditional GAN (Goodfellow et al.,2014), operated like a blackbox where random noises go in and an image gets generated. In this project, we explored two controlling methods of StyleGAN: Style Mixing and Truncation..
 
-	Style Mixing allows us to embed styles at different levels of our generative layers to control various features. Using this method, we were able to transfer style from raw images to our destination images. This method works quite well even on our small model with a shallow network of only a few layers.
+Style Mixing allows us to embed styles at different levels of our generative layers to control various features. Using this method, we were able to transfer style from raw images to our destination images. This method works quite well even on our small model with a shallow network of only a few layers.
 
-	At the coarse layer (4x4), we noticed changes in face shape, pose, hairstyle and mouth. These are the bigger, more noticeable features.
+At the coarse layer (4x4), we noticed changes in face shape, pose, hairstyle and mouth. These are the bigger, more noticeable features.
 
-	At the middle layer (8x8), we noticed changes in eye brows, eye color, nose and hair texture. These features are starting to head towards the subtle direction.
+At the middle layer (8x8), we noticed changes in eye brows, eye color, nose and hair texture. These features are starting to head towards the subtle direction.
 
-	At the fine layer (64x64), we noticed slight changes in color scheme, sharper hairline and shading. These features are definitely more subtle compared to our coarse layer but not too far from our middle layer due to our shallow network.
+At the fine layer (64x64), we noticed slight changes in color scheme, sharper hairline and shading. These features are definitely more subtle compared to our coarse layer but not too far from our middle layer due to our shallow network.
  
 Fig. 7. Styles from source B (top row) were combined with the full image of source A (left column).
 
@@ -86,7 +86,7 @@ Fig. 8. Truncation Trick
 <div style="text-align:center"><img src="![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/StyleGAN/truncation.png)" /></div>
 
 ### 2.3 Quality Evaluation
-	StyleGAN performed quite well on a limited dataset with limited GPU and training time. We believe training the full dataset for multiple GPU days and with all layers (up to 1024x1024) will lead to much better results in both FID and resolution. The paper used FID as the main measurement of quality so we only measured the FID value for our model which was 39.4008.
+StyleGAN performed quite well on a limited dataset with limited GPU and training time. We believe training the full dataset for multiple GPU days and with all layers (up to 1024x1024) will lead to much better results in both FID and resolution. The paper used FID as the main measurement of quality so we only measured the FID value for our model which was 39.4008.
 
 Overall, our shallow model produced results inline with the StyleGAN paper. This indicates that StyleGAN is applicable to non-natural images like animated and cartoon characters. We find the truncation trick to be especially interesting since a slight tweak in Ψ can lead to very drastic changes. StyleGAN is quite powerful, even on our simple model.
  
