@@ -9,34 +9,42 @@ Fig.1. Left: Training with 50 epochs on the full dataset, Right:Training with 10
 
 Full Dataset               |  19,000 images
 :-------------------------:|:-------------------------:
-![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/training_50epochs_full.png) | !![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/training_50epochs_19000.png)
+![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/training_50epochs_full.png) | !![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/training_100epochs_19000.png)
 
 By training with the shrinked dataset, the models did a fair job capturing the major attributes. In contrast, using the full dataset, the model not only learns those attributes, but also represents them more accurately and generates less artifacts (see Table.1).
 
 <div style="text-align:center"><img src="![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/DCGAN_Table.png)" /></div>
 
 ### 1.2. Feature Exploration
-As the author of DCGAN pointed out, the manipulation of the Z representation, ie. the input noise, yields smooth transformation of certain characteristics in the image.3 We explored this based on the model trained on the full dataset with 50 epochs. Here, we used a fixed input Z, which consists of 100 variables drawn from a standard Gaussian distribution, and manipulated the selected variables one at a time while holding the others constant, in order to observe the impact of such variables on the generated image.
+As the author of DCGAN pointed out, the manipulation of the Z representation, ie. the input noise, yields smooth transformation of certain characteristics in the image. We explored this based on the model trained on the full dataset with 50 epochs. Here, we used a fixed input Z, which consists of 100 variables drawn from a standard Gaussian distribution, and manipulated the selected variables one at a time while holding the others constant, in order to observe the impact of such variables on the generated image.
 
 We selected 10 input variables (ie. 1st, 10th, 20th…, 90th in the Z representation), and for each of them, we adjusted it by multiplying it with a manipulation factor K that ranges from -3 to 3. For example, Fig.2 illustrates the manipulation of the Z variable, and uses it as the input to generate an image. For this random input, scaling the 1st variable changes the face contour of the anime character, making the width of the face shrink as K increases. Scaling the 20th variable seems to impact the face orientation. Some Z variables appear to control multiple features, producing an effect of varying the facial expression. The 90th variable seems to impact features such as face orientation, eye position, and mouth shape, allowing the transition of facial expression and the overall appearance of the character.
 
 Fig.2. Manipulation of Z representation changes in the image attributes. Each row shows the transformation of output images when we adjust that Z variable with the corresponding manipulation factor K. 
 
+<div style="text-align:center"><img src="![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/Z_manipulation.png)" /></div>
+
 However, we cannot conclude that there is an explicit mapping between the manipulation of a specific Z variable and the impact on image attributes. For example, the manipulation of the 1st variable does not always change the face contour. With another random input (see Fig.3.), the 1st variable does not have a strong influence on the face contour, and it seems to have a tiny effect on the hair style. Instead, the 60th variable now appears to have a significant effect on face shape. At the same time, the 70th variable now impacts the eye color, and we did not observe this effect in the previous example.
  
 Fig.3. Another example Z representation manipulation
 
+<div style="text-align:center"><img src="![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/Z_manipulation2.png)" /></div>
+
 The difference in the effect of the variable at the same index position in the Z representation suggests that DCGAN is incapable of allowing specific-control of certain image attributes. However, DCGAN does reveal a potential of learning meaningful attributes and generating images with smoothly transiting features. Our results show the limitations of DCGAN in that the model cannot explicitly separate the features, adjusting a specific variable in Z representation sometimes lead to changes in multiple attributes and result in a global effect on the synthesized image.
 
 ### 1.3. Quality Evaluation
-	Given the limitations of computational power, we attempted to calculate FID in the training process with a smaller dataset consisting of 9000 images, and used InceptionV3 as the feature extractor. In this toy dataset, we trained on 5 epochs to get an idea of the training quality. We noticed that the FID score is always high and fluctuating. This is explainable because InceptionV3 was trained on a different dataset and might not capture the images features for the anime faces. We did not have enough time to implement a better suited CNN model for feature extraction, so we decided to comment on the results with visual inspection.4
+	Given the limitations of computational power, we attempted to calculate FID in the training process with a smaller dataset consisting of 9000 images, and used InceptionV3 as the feature extractor. In this toy dataset, we trained on 5 epochs to get an idea of the training quality. We noticed that the FID score is always high and fluctuating. This is explainable because InceptionV3 was trained on a different dataset and might not capture the images features for the anime faces. We did not have enough time to implement a better suited CNN model for feature extraction, so we decided to comment on the results with visual inspection.
  
 Fig.4. Plot of FID 
+
+<div style="text-align:center"><img src="![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/DCGAN_FID.png)" /></div>
 
 We observed that the loss of the generator and the discriminator display trends of declining in the training. However, both of them have significant fluctuations, and the loss of the generator is always greater than that of the discriminator. This implies that the quality of fake images is unstable and that the generator fails to perfectly simulate the real images. As a result, artifacts and lack of realness accompany this high generator loss. 
 
  
-Fig.5. Loss of the Generator and Discriminator 
+Fig.5. Loss of the Generator and Discriminator
+
+<div style="text-align:center"><img src="![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/DCGAN_Loss.png)" /></div>
 
 ## StyleGAN
 
@@ -45,6 +53,10 @@ Fig.5. Loss of the Generator and Discriminator
 
   
 	Fig. 6. Left: Our trained images at genesis. Right: Our trained images at completion (after 3,500 iterations)
+	
+At Genesis                 |  Completion
+:-------------------------:|:-------------------------:
+![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/StyleGAN/fakes000000_first.png) | !![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/StyleGAN/fakes003500_last.png)
 
 	As you can see the model images look quite pleasant, considering our model was trained on Google Colab Pro (1 GPU) for less than one day using only 19,000 images. The original NVIDIA’s StyleGAN paper used two main datasets for two different models: Flickr-Faces-HQ (FFHQ) and CelebA HQ, 70,000 1024x1024 and 200,000 with mixed resolution images, respectively.6 Additionally, our model used a resolution of 64x64 which was much lower than that of NVIDIA’s (1024x1024).
 
@@ -61,15 +73,17 @@ Fig.5. Loss of the Generator and Discriminator
  
 Fig. 7. Styles from source B (top row) were combined with the full image of source A (left column).
 
+<div style="text-align:center"><img src="![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/StyleGAN/style-mixing2.png)" /></div>
+
 Truncation tricks involved in controlling the W with Ψ, using this equation:
 
-W_new=W_avg+Ψ(W-W_avg)
+<center> W_new=W_avg+Ψ(W-W_avg) </center>
 
 By truncatingWwe were able to drastically change our generated images. At Ψ=0, faces converged to the “mean” face and looked the same as our generated images without truncation. However, when we apply negative scaling to styles, we got the corresponding opposite or “anti-face.” Lastly, at higher values of Ψ, gender, hair length, coloring are flipped.
 
-             Ψ=1                Ψ=0.7             Ψ=0.5	              Ψ=0               Ψ=-0.5	   Ψ=-1
- 
 Fig. 8. Truncation Trick
+
+<div style="text-align:center"><img src="![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/StyleGAN/truncation.png)" /></div>
 
 ### 2.3 Quality Evaluation
 	StyleGAN performed quite well on a limited dataset with limited GPU and training time. We believe training the full dataset for multiple GPU days and with all layers (up to 1024x1024) will lead to much better results in both FID and resolution. The paper used FID as the main measurement of quality so we only measured the FID value for our model which was 39.4008.
@@ -77,3 +91,7 @@ Fig. 8. Truncation Trick
 Overall, our shallow model produced results inline with the StyleGAN paper. This indicates that StyleGAN is applicable to non-natural images like animated and cartoon characters. We find the truncation trick to be especially interesting since a slight tweak in Ψ can lead to very drastic changes. StyleGAN is quite powerful, even on our simple model.
  
 Fig. 9. Newly generated images from our StyleGAN model
+
+<div style="text-align:center"><img src="![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/StyleGAN/generated_images.png)" /></div>
+
+## Thank you!
