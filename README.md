@@ -7,18 +7,15 @@ We tested our DCGAN model performance on two scales of the dataset. We trained t
 
 Fig.1. Left: Training with 50 epochs on the full dataset, Right:Training with 100 epochs on the shrinked dataset
 
-<div style="width: 50%; float:left;">
-![Training at 50 with full dataset](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/training_50epochs_full.png)
-
-</div>
-
-<div style="width: 50%; float:right;">
-![Training at 50 with 19000 images](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/training_50epochs_19000.png)
-</div>
+Full Dataset               |  19,000 images
+:-------------------------:|:-------------------------:
+![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/training_50epochs_full.png) | !![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/training_50epochs_19000.png)
 
 By training with the shrinked dataset, the models did a fair job capturing the major attributes. In contrast, using the full dataset, the model not only learns those attributes, but also represents them more accurately and generates less artifacts (see Table.1).
 
-![DCGAN Table](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/DCGAN_Table.png)
+<p align="center">
+  ![DCGAN Table](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/DCGAN_Table.png)
+</p>
 
 ### 1.2. Feature Exploration
 As the author of DCGAN pointed out, the manipulation of the Z representation, ie. the input noise, yields smooth transformation of certain characteristics in the image.3 We explored this based on the model trained on the full dataset with 50 epochs. Here, we used a fixed input Z, which consists of 100 variables drawn from a standard Gaussian distribution, and manipulated the selected variables one at a time while holding the others constant, in order to observe the impact of such variables on the generated image.
