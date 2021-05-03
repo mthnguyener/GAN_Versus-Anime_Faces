@@ -1,4 +1,6 @@
-# GAN_Versus-Anime_Faces
+# GAN Versus: Anime Faces
+
+Below is our implementation on the Anime Face Dataset using **DCGAN** and **StyleGAN**.
 
 ## DCGAN
 
