@@ -9,7 +9,7 @@ Fig.1. Left: Training with 50 epochs on the full dataset, Right:Training with 10
 
 Full Dataset               |  19,000 images
 :-------------------------:|:-------------------------:
-![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/training_50epochs_full.png) | !![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/training_100epochs_19000.png)
+![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/training_50epochs_full.png) | ![](https://github.com/mthnguyener/GAN_Versus-Anime_Faces/blob/main/Results/DCGAN/training_100epochs_19000.png)
 
 By training with the shrinked dataset, the models did a fair job capturing the major attributes. In contrast, using the full dataset, the model not only learns those attributes, but also represents them more accurately and generates less artifacts (see Table.1).
 
